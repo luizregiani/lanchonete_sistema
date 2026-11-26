@@ -1,0 +1,42 @@
+SISTEMA DA LANCHONETE - INSTALACAO (XAMPP)
+
+INSTALACAO NOVA
+1. Copie esta pasta para C:\xampp\htdocs\
+2. Inicie Apache e MySQL no XAMPP.
+3. No phpMyAdmin, aba "Importar", envie banco.sql.
+4. Abra http://localhost/NOME_DA_PASTA/
+
+JA TENHO O BANCO DE UMA VERSAO ANTERIOR
+- Nao precisa importar nada: ao abrir qualquer pagina, o sistema cria sozinho as colunas e tabelas
+  que faltarem (foto do produto, forma de pagamento, endereco, configuracoes).
+- Isso exige que o usuario do MySQL tenha permissao de ALTER (o "root" do XAMPP tem).
+- Se preferir fazer a mao: abra o seu banco no phpMyAdmin e execute atualizar_banco.sql.
+
+ACESSO DA EQUIPE
+- Endereco: http://localhost/NOME_DA_PASTA/login.php (nao ha link publico no menu)
+- Usuario inicial: admin   Senha: Admin@2026
+- Troque a senha em Configuracoes > Alterar minha senha. (O admin so e criado se nao existir nenhum usuario.)
+
+ENTREGA
+- Taxa fixa para todos os pedidos. O administrador altera em Configuracoes > Taxa de entrega.
+- O cliente digita rua, numero, bairro e complemento.
+
+PAGAMENTO
+- Pix: Configuracoes > informe a chave Pix, nome e cidade do recebedor (chave: ate 77 caracteres).
+  Apos o pedido, o cliente recebe o codigo "copia e cola" com o valor. O sistema NAO confirma o
+  pagamento sozinho: confira o recebimento no app do banco.
+- Cartao de credito/debito e dinheiro: pagos na entrega. O sistema nao coleta nem guarda numero de cartao.
+
+PRODUTOS (ADMINISTRACAO > PRODUTOS)
+- Busca, filtro por categoria e situacao (disponiveis, indisponiveis, sem foto) e indicadores.
+- Novo produto/Editar: foto por arrastar-e-soltar (JPG, PNG ou WEBP, ate 2 MB), previa ao vivo do cartao
+  do cardapio, contadores de caracteres, mascara de preco e criacao de categoria na hora.
+- Duplicar (cria copia indisponivel), Ativar/Desativar e Excluir (nao exclui produto que ja foi vendido).
+- As imagens ficam em uploads/produtos/ (so imagens sao servidas nessa pasta).
+
+SEGURANCA
+- Paginas da equipe exigem login e o perfil e conferido no banco a cada acesso.
+- Produtos e Configuracoes: somente perfil admin. Exportar CSV: admin e atendente.
+- Formularios protegidos com token CSRF; login bloqueia o IP apos 8 falhas em 15 minutos.
+- .htaccess bloqueia acesso direto a config.php, conexao.php, funcoes.php e arquivos .sql.
+- Em producao, use HTTPS e crie um usuario proprio no MySQL (nao use "root" sem senha).
